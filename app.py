@@ -1,3 +1,6 @@
+import os
+os.environ["HF_HUB_ENABLE_HF_TRANSFER"]='1'
+from huggingface_hub import snapshot_download
 import base64
 from diffusers import DiffusionPipeline,EulerDiscreteScheduler
 from io import BytesIO
@@ -17,6 +20,8 @@ class InferlessPythonModel:
         "trained_betas": None,
         "use_karras_sigmas": False
     }
+    snapshot_download(repo_id="stabilityai/stable-diffusion-xl-base-1.0",allow_patterns=["*.safetensors"])
+    snapshot_download(repo_id="stabilityai/stable-diffusion-xl-refiner-1.0",allow_patterns=["*.safetensors"])
     
     self.base = DiffusionPipeline.from_pretrained(
         "stabilityai/stable-diffusion-xl-base-1.0",
